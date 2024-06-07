@@ -5,9 +5,12 @@ import com.project.blog.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,7 +30,7 @@ public class MemberController {
         System.out.println("MemberController.signup");
         System.out.println("memberDto = " + memberDto);
         memberService.signup(memberDto);
-        return "index";
+        return "login";
     }
 
     // 로그인 페이지 요청
@@ -49,5 +52,14 @@ public class MemberController {
             // 로그인 실패
             return "login";
         }
+    }
+
+    // 회원목록 페이지 요청
+    @GetMapping("/member/")
+    public String list(Model model){  // html로 가져갈 데이터가 있을 때 Model을 사용
+        List<MemberDto> memberDtoList = memberService.findAll();
+        // Model의 addAttribute : Controller에서 View로 데이터를 전달하기 위해 사용
+        model.addAttribute("memberList", memberDtoList);
+        return "list";
     }
 }

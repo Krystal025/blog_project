@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+<body>
+<h2>list.html</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Name</th>
+        <th>Detail</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="member: ${memberList}">  <!--Thymeleaf의 for each문 역할 (변수는 반복문 내에서만 유효-->
+        <!--member 변수(memberDtoList 값)의 필드 = MemberDto의 필드-->
+        <td th:text="${member.id}"></td>
+        <td th:text="${member.memberEmail}"></td>
+        <td th:text="${member.memberPassword}"></td>
+        <td th:text="${member.memberName}"></td>
+        <td>
+            <!-- 1) query string : /member?id=1 -->
+            <!-- 2) REST Api : /member/1 -->
+            <!-- @{| |} : 경로 상에 서버에서 가져온 데이터를 출력할 때 사용 (Thymeleaf 기능) -->
+            <a th:href="@{|/member/${member.id}|}">조회</a>
+        </td>
+        <td>
+            <a th:href="@{|/member/delete/${member.id}|}">삭제</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

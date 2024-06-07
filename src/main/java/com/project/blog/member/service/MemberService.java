@@ -6,6 +6,8 @@ import com.project.blog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +45,18 @@ public class MemberService {
             // 조회결과가 없을 경우
             return null;
         }
+    }
+
+    // 회원목록 조회 기능
+    public List<MemberDto> findAll() {
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        // Entity 리스트를 Dto 리스트로 변환 (하나씩 꺼내서 배열에 담아야함)
+        for (MemberEntity memberEntity : memberEntityList){
+            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+            memberDtoList.add(memberDto);
+        }
+        return memberDtoList;
     }
 
 }
