@@ -2,6 +2,7 @@ package com.project.blog.member.controller;
 
 import com.project.blog.member.dto.MemberDto;
 import com.project.blog.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,4 +30,24 @@ public class MemberController {
         return "index";
     }
 
+    // 로그인 페이지 요청
+    @GetMapping("/member/login")
+    public String loginForm(){
+        return "login";
+    }
+
+    // 로그인 처리
+    @PostMapping("/member/login")
+    public String login(@ModelAttribute MemberDto memberDto, HttpSession session){
+        MemberDto loginResult =  memberService.login(memberDto);
+        if(loginResult != null){
+            // 로그인 성공
+            // 로그인한 회원의 이메일을 loginEmail이라는 이름으로 세션에 담아줌
+            session.setAttribute("loginEmail", loginResult.getMemberEmail());
+            return "main";
+        }else{
+            // 로그인 실패
+            return "login";
+        }
+    }
 }
