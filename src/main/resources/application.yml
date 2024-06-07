@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+# database 연동 설정
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 개인이 설정한 Database명
+    url: jdbc:mysql://localhost:3306/db_blog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    # mysql에 생성한 사용자 계정 정보
+    username: user_blog
+    password: Sujeong88*
+  thymeleaf:
+    cache: false
+  # spring data jpa 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update  # 프로젝트가 실행될 때마다 CREATE가 아닌 변경사항만 UPDATE 시키기 위함
