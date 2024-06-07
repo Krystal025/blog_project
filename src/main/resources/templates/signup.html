@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>signup</title>
+</head>
+<body>
+    <!--action 속성 : form에 작성한 데이터를 보낼 위치 지정-->
+    <form action="/member/signup" method="post">  <!--URL에 정보가 노출되지 않도록 post로 지정-->
+        <!--name 속성 : 서버로 전송할 때 사용할 변수명-->
+        이메일 : <input type="text" name="memberEmail"> <br>
+        비밀번호 : <input type="password" name="memberPassword"> <br>
+        이름 : <input type="text" name="memberName"> <br>
+        <button type="submit">회원가입</button>
+    </form>
+</body>
+</html>
