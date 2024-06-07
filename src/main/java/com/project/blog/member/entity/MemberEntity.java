@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "member_table") //DB에 생성될 테이블명
 public class MemberEntity {
+
     @Id //PK처리
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment
     private Long id;

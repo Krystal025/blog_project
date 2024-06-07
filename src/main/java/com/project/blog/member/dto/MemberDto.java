@@ -1,10 +1,7 @@
 package com.project.blog.member.dto;
 
 import com.project.blog.member.entity.MemberEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

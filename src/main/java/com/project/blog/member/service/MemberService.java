@@ -59,4 +59,19 @@ public class MemberService {
         return memberDtoList;
     }
 
+    // 회원 상세정보 조회 기능
+    public MemberDto findById(Long id) {
+        System.out.println("id 조회 확인"+id);
+        Optional<MemberEntity> byId = memberRepository.findById(id);
+        if(byId.isPresent()){
+            // 조회하는 Id가 있을 경우
+            MemberEntity memberEntity = byId.get();  // get()으로 Optional을 벗겨냄
+            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+            return memberDto;
+        }else{
+            // 조회하는 Id가 없을 경우
+            return null;
+        }
+    }
+
 }

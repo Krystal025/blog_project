@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -62,4 +63,18 @@ public class MemberController {
         model.addAttribute("memberList", memberDtoList);
         return "list";
     }
+
+
+    // 회원 상세 페이지 요청
+    @GetMapping("/member/{id}")
+    public String detail(@PathVariable("id") Long id, Model model){  // @PathVariable : 경로 상의 값을 가져올 때 사용
+        MemberDto memberDto = memberService.findById(id);
+        model.addAttribute("member",memberDto);
+        if(memberDto != null){
+            return "detail";
+        }else{
+            return "list";
+        }
+    }
+
 }
