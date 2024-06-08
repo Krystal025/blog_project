@@ -45,8 +45,7 @@ public class MemberController {
     public String login(@ModelAttribute MemberDto memberDto, HttpSession session){
         MemberDto loginResult =  memberService.login(memberDto);
         if(loginResult != null){
-            // 로그인 성공
-            // 로그인한 회원의 이메일을 loginEmail이라는 이름으로 세션에 담아줌
+            // 로그인 성공 (로그인한 회원의 이메일을 loginEmail이라는 이름으로 세션에 담아줌)
             session.setAttribute("loginEmail", loginResult.getMemberEmail());
             return "main";
         }else{
@@ -65,7 +64,7 @@ public class MemberController {
     }
 
 
-    // 회원 상세 페이지 요청
+    // 회원정보 상세페이지 요청
     @GetMapping("/member/{id}")
     public String detail(@PathVariable("id") Long id, Model model){  // @PathVariable : 경로 상의 값을 가져올 때 사용
         MemberDto memberDto = memberService.findById(id);
@@ -77,4 +76,20 @@ public class MemberController {
         }
     }
 
+    // 회원정보 수정페이지 요청
+    @GetMapping("/member/update")
+    public String updateForm(HttpSession session, Model model){
+        String myEmail = (String) session.getAttribute("loginEmail");
+        MemberDto memberDto = memberService.updateForm(myEmail);
+        model.addAttribute("updateMember", memberDto);
+        return "update";
+    }
+
+    // 회원정보 수정 처리
+    @PostMapping("/member/update")
+    public String update(@ModelAttribute MemberDto memberDto){
+        memberService.update(memberDto);
+        // 회원정보를 수정한 상세페이지를 보여줌
+        return "redirect:/member/" + memberDto.getId();
+    }
 }

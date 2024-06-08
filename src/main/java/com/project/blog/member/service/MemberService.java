@@ -62,16 +62,31 @@ public class MemberService {
     // 회원 상세정보 조회 기능
     public MemberDto findById(Long id) {
         System.out.println("id 조회 확인"+id);
-        Optional<MemberEntity> byId = memberRepository.findById(id);
-        if(byId.isPresent()){
-            // 조회하는 Id가 있을 경우
-            MemberEntity memberEntity = byId.get();  // get()으로 Optional을 벗겨냄
-            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
-            return memberDto;
+        Optional<MemberEntity> memberEntityById = memberRepository.findById(id);
+        if(memberEntityById.isPresent()){
+            // 아래 두줄의 코드를 한줄로 요약해서 리턴
+            // MemberEntity memberEntity = memberEntityById.get();
+            // MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+            return MemberDto.toMemberDto(memberEntityById.get()); // get()으로 Optional을 벗겨냄
         }else{
-            // 조회하는 Id가 없을 경우
             return null;
         }
     }
 
+    // 회원정보 수정페이지 요청
+    public MemberDto updateForm(String myEmail){
+        Optional<MemberEntity> memberEntityByEmail = memberRepository.findByMemberEmail(myEmail);
+        if(memberEntityByEmail.isPresent()){
+            // 이메일이 조회되면 Optional 객체를 get()으로 벗겨내고, MemberDto 타입으로 변경
+            return MemberDto.toMemberDto(memberEntityByEmail.get());
+        }else{
+            return null;
+        }
+    }
+
+    // 회원정보 수정 기능
+    public void update(MemberDto memberDto){
+        // save() : ID가 없는 데이터는 INSERT 처리, ID가 있는 데이터는 UPDATE 처리함
+        memberRepository.save(MemberEntity.toMemberEntity(memberDto));
+    }
 }
