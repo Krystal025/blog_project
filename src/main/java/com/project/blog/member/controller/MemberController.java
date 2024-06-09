@@ -92,4 +92,11 @@ public class MemberController {
         // 회원정보를 수정한 상세페이지를 보여줌
         return "redirect:/member/" + memberDto.getId();
     }
+
+    // 회원정보 삭제 처리
+    @GetMapping("/member/delete/{id}")
+    public String delete(@PathVariable("id") Long id){
+        memberService.deleteById(id);
+        return "redirect:/member/";
+    }
 }

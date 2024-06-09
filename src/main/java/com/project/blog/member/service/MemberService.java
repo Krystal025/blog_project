@@ -89,4 +89,10 @@ public class MemberService {
         // save() : ID가 없는 데이터는 INSERT 처리, ID가 있는 데이터는 UPDATE 처리함
         memberRepository.save(MemberEntity.toMemberEntity(memberDto));
     }
+
+
+    // 회원정보 삭제 기능
+    public void deleteById(Long id) {
+        memberRepository.deleteById(id);
+    }
 }
