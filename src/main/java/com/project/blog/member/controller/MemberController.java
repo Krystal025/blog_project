@@ -99,4 +99,13 @@ public class MemberController {
         memberService.deleteById(id);
         return "redirect:/member/";
     }
+
+    // 로그아웃 처리
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session){
+        // invalidate() : 현재 세션을 무효화하는 메소드
+        session.invalidate();
+        return "index";
+    }
+
 }
